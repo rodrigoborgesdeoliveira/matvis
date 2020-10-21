@@ -4,7 +4,7 @@
   "description": "Interactive matrix visualization inspired by 3blue1brown.",
   "main": "app.js",
   "scripts": {
-    "dev": "webpack -d --watch",
+    "dev": "webpack-dev-server --open --host localhost --port 3000 --hot",
     "build": "webpack -p"
   },
   "author": "Shad Sharma",
@@ -23,6 +23,14 @@
     "node-libs-browser": "^1.0.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.16.5"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "numeric": "^1.2.6",
+    "react": "^15.7.0",
+    "react-bootstrap": "^0.30.2",
+    "react-dom": "^15.7.0"
   }
 }
