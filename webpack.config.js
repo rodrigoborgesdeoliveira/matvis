@@ -1,11 +1,11 @@
-var path = require('path');
-var webpack = require('webpack');
-var htmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 
-var DIST_DIR = path.resolve(__dirname, 'dist');
-var APP_DIR = path.resolve(__dirname, 'app');
+const DIST_DIR = path.resolve(__dirname, 'dist');
+const APP_DIR = path.resolve(__dirname, 'app');
 
-var HTMLWebpackPluginConfig = new htmlWebpackPlugin({
+const HTMLWebpackPluginConfig = new htmlWebpackPlugin({
   template: __dirname + '/app/index.html',
   filename: 'index.html',
   inject: 'body'
@@ -17,51 +17,73 @@ module.exports = {
     path: DIST_DIR,
     filename: "bundle.js"
   },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /.jsx?$/,
+        test: /\.jsx?$/,
         include: APP_DIR,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
         }
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.png$/,
-        loader: "url-loader?limit=100000"
+        use: [{
+          loader: "url-loader",
+          options: {
+            limit: 100000,
+          },
+        }]
       },
       {
         test: /\.jpg$/,
-        loader: "file-loader"
+        use: [{
+          loader: "file-loader"
+        }]
       },
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/font-woff'
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/font-woff'
+          }
+        }]
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/octet-stream'
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/octet-stream'
+          }
+        }]
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file'
+        use: [{
+          loader: 'file-loader'
+        }]
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=image/svg+xml'
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'image/svg+xml'
+          }
+        }]
       },
-      {
-        test: /bootstrap.+\.(jsx|js)$/,
-        loader: 'imports?jQuery=jquery,$=jquery,this=>window'
-      }
     ]
   },
   plugins: [
