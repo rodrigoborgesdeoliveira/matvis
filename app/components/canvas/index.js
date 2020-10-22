@@ -12,10 +12,11 @@ class CanvasComponent extends React.Component {
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
+        this.canvas;
     }
 
     getMousePos(event) {
-        let canvas = document.getElementById("matvis");
+        let canvas = this.canvas;
         let rect = canvas.getBoundingClientRect();
 
         let xRatio = this.props.scale * rect.width / canvas.width;
@@ -28,7 +29,7 @@ class CanvasComponent extends React.Component {
 
     componentDidMount() {
         let self = this;
-        let canvas = document.getElementById("matvis");
+        let canvas = this.canvas;
 
         canvas.addEventListener("touchstart", function (touchEvent) {
             let mouseEvent = new MouseEvent("mousedown", {
@@ -134,7 +135,7 @@ class CanvasComponent extends React.Component {
     }
 
     updateCanvas() {
-        let canvas = document.getElementById("matvis");
+        let canvas = this.canvas;
         canvas.style.backgroundColor = 'rgba(0, 0, 0, 1)';
 
         let ctx = canvas.getContext('2d');
@@ -375,7 +376,10 @@ class CanvasComponent extends React.Component {
     }
 
     render() {
-        return <canvas id="matvis" width={1140} height={640}
+        return <canvas id="matvis" 
+            ref={component => this.canvas = component}
+            width={1140} 
+            height={640}
             style={{ width: '100%' }}
             onMouseDown={this.handleMouseDown}
             onMouseMove={this.handleMouseMove}
